@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ===================== META / SEO / SOCIAL ===================== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Informe Integral de Mercado y Viabilidad Financiera · Vending Saludable (Valladolid → CyL → España)</title>
+  <meta name="description" content="Informe completo, interactivo y responsive sobre el mercado y la viabilidad financiera de una línea de máquinas de vending 100% saludables, con piloto en Valladolid, escalado a Castilla y León y expansión nacional." />
+  <meta name="robots" content="index,follow" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Informe de Mercado y Viabilidad Financiera · Vending Saludable" />
+  <meta property="og:description" content="Análisis estratégico, datos sectoriales y modelización financiera (20.000 € de capital inicial) para un negocio de vending saludable." />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Vending Saludable" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Informe de Mercado y Viabilidad Financiera · Vending Saludable" />
+  <meta name="twitter:description" content="Informe interactivo con gráficos: tamaño de mercado, tendencias, barreras, competencia y plan financiero (20.000 € de capital inicial)." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" />
+
+  <!-- ===================== STYLES ===================== -->
+  <style>
+    :root{
+      --bg:#f7faf7;
+      --paper:#ffffff;
+      --ink:#243524;
+      --muted:#5b7a5c;
+      --brand:#2e7d32;
+      --brand-2:#43a047;
+      --accent:#1e88e5;
+      --warn:#ef6c00;
+      --danger:#c62828;
+      --ok:#00897b;
+      --shadow:0 10px 24px rgba(0,0,0,.08);
+      --radius:16px;
+    }
+    html{scroll-behavior:smooth}
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink); background:var(--bg); line-height:1.6;
+    }
+    header{
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));
+      color:#fff; padding:2rem 1rem 1.5rem; position:sticky; top:0; z-index:10;
+      box-shadow:var(--shadow);
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:0 1rem}
+    header h1{margin:.25rem 0 0;font-weight:800;letter-spacing:.2px}
+    header p.lead{margin:.25rem 0 1rem;opacity:.95}
+    nav[aria-label="Índice"]{
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+      border-radius:12px; padding:.5rem; overflow:auto;
+    }
+    nav ul{display:flex; gap:.5rem; flex-wrap:wrap; padding:0; margin:0; list-style:none}
+    nav a{
+      display:inline-block; padding:.45rem .7rem; border-radius:999px;
+      background:rgba(255,255,255,.18); color:#fff; text-decoration:none; font-size:.92rem;
+      border:1px solid rgba(255,255,255,.25);
+    }
+    nav a:hover, nav a:focus{outline:none; background:#fff; color:var(--brand)}
+    main{padding:1.5rem 0 3rem}
+    section{
+      background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:1.25rem; margin:1rem 0;
+    }
+    section h2{margin-top:.2rem;color:var(--brand);font-size:1.6rem}
+    section h3{margin-top:.5rem;color:#2f5d31}
+    p{margin:.35rem 0}
+    .grid{display:grid; gap:1rem}
+    @media (min-width:900px){ .grid.cols-2{grid-template-columns:1fr 1fr} .grid.cols-3{grid-template-columns:1fr 1fr 1fr} }
+    .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#eef6ee;border:1px solid #dbe7db;border-radius:6px;padding:.05rem .35rem}
+    .badge{display:inline-block;padding:.2rem .5rem;border-radius:999px;font-size:.78rem;border:1px solid #dbe7db;background:#eef6ee;color:#2f5d31}
+    .note{background:#fff8e1;border:1px solid #ffe0b2;padding:.7rem;border-radius:12px}
+    .warn{color:var(--warn)}
+    .ok{color:var(--ok)}
+    .danger{color:var(--danger)}
+    figure{margin:0}
+    figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:.25rem}
+    .chart-wrap{padding:.5rem;background:#fbfffb;border:1px dashed #dbe7db;border-radius:12px}
+    canvas{max-width:100%;height:auto}
+    table{width:100%;border-collapse:collapse;margin:.75rem 0;border:1px solid #e6eee6}
+    th,td{padding:.5rem;border-bottom:1px solid #eef6ee;text-align:left}
+    th{background:#f0f7f0}
+    .controls{
+      display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;background:#f2f8f2;border:1px solid #e2eee2;border-radius:12px;padding:.6rem
+    }
+    .controls label{font-weight:600;font-size:.9rem}
+    .controls select,.controls input{
+      padding:.35rem .6rem;border-radius:10px;border:1px solid #cfe4cf;background:#fff;min-width:140px
+    }
+    .kpi{
+      display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      margin:.75rem 0
+    }
+    .kpi .card{
+      background:#f7fff7;border:1px solid #dbe7db;border-radius:12px;padding:.7rem
+    }
+    .card h4{margin:.1rem 0 .4rem;color:#2f5d31;font-size:1rem}
+    .muted{color:var(--muted)}
+    footer{padding:2rem 0;color:#4a5f4b}
+    a.source{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)}
+    a.source:hover{border-bottom-style:solid}
+    .sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+  </style>
+</head>
+<body>
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header role="banner">
+    <div class="wrap">
+      <h1>Vending Saludable · Informe de Mercado & Viabilidad Financiera</h1>
+      <p class="lead">Perspectiva de emprendedor con <strong>20.000&nbsp;€</strong> de capital inicial. Ámbito: <strong>Valladolid</strong> → <strong>Castilla y León</strong> → <strong>España</strong>.</p>
+
+      <nav aria-label="Índice" role="navigation">
+        <ul>
+          <li><a href="#resumen-ejecutivo">Resumen Ejecutivo</a></li>
+          <li><a href="#introduccion">Introducción</a></li>
+          <li><a href="#analisis-mercado">Tamaño de Mercado</a></li>
+          <li><a href="#tendencias">Tendencias</a></li>
+          <li><a href="#barreras">Barreras</a></li>
+          <li><a href="#competencia">Competencia</a></li>
+          <li><a href="#oportunidades">Oportunidades</a></li>
+          <li><a href="#cliente-ideal">Cliente Ideal</a></li>
+          <li><a href="#finanzas">📊 Informe Financiero</a></li>
+          <li><a href="#conclusiones">Conclusiones</a></li>
+          <li><a href="#referencias">Referencias</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" role="main">
+    <!-- ===================== RESUMEN EJECUTIVO ===================== -->
+    <section id="resumen-ejecutivo" role="region" aria-labelledby="h-resumen">
+      <h2 id="h-resumen">Resumen Ejecutivo</h2>
+      <p><strong>Idea:</strong> Línea de máquinas de vending que ofrezcan <em>exclusivamente</em> productos saludables y nutricionalmente óptimos. Piloto en <strong>Valladolid</strong> (colegios, universidades, hospitales, gimnasios, oficinas y coworking), con opción de escalado a <strong>Castilla y León</strong> y posterior despliegue en <strong>España</strong>. Modelo flexible (compra, leasing o renting).</p>
+      <p><strong>Oportunidad:</strong> El mercado español de vending supera el millón de actos de consumo diarios y crece tras la pandemia, con un giro hacia opciones <em>healthy</em>. La presión regulatoria en centros educativos y sanitarios favorece la sustitución de surtidos tradicionales por alternativas saludables. Valladolid presenta masa crítica suficiente para un piloto robusto y coste operativo controlado.</p>
+      <p><strong>Conclusión financiera preliminar:</strong> Con un capital inicial de <strong>20.000&nbsp;€</strong> y <strong>4 máquinas</strong> en <em>renting</em>, el escenario <em>intermedio</em> (25 ventas/día, ticket 2,40&nbsp;€, margen bruto 45%) proyecta:
+      <ul>
+        <li>Ingresos/mes por máquina ≈ <strong>1.560&nbsp;€</strong>; flota (4) ≈ <strong>6.240&nbsp;€</strong>.</li>
+        <li>Umbral de rentabilidad por máquina ≈ <strong>965&nbsp;€</strong>/mes.</li>
+        <li><strong>Payback</strong> (retorno del capital inicial) entre <strong>12–16 meses</strong> según mix y rotación; <strong>ROI año 1</strong> positivo en escenarios intermedio/optimista.</li>
+      </ul>
+      </p>
+      <p class="note"><strong>Claves de éxito:</strong> ubicaciones piloto con alto tráfico y apoyo institucional; surtido curado por segmento; reposición y cadena de frío impecables; pagos <span class="kbd">contactless/Bizum</span> sin fricción; analítica de ventas para iterar surtido.</p>
+    </section>
+
+    <!-- ===================== INTRODUCCIÓN ===================== -->
+    <section id="introduccion" role="region" aria-labelledby="h-intro">
+      <h2 id="h-intro">Introducción</h2>
+      <p>Este informe integra <strong>análisis de mercado</strong> (Valladolid → CyL → España) y un <strong>informe financiero inicial</strong> para valorar la viabilidad de invertir <strong>20.000&nbsp;€</strong> en un piloto de 3–5 máquinas de <em>vending saludable</em>, con crecimiento escalonado. El documento está estructurado en pirámide invertida, con resúmenes visuales y fuentes enlazadas para verificación.</p>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" alt="Máquinas expendedoras modernas iluminadas en un espacio público" style="width:100%;border-radius:12px;box-shadow:var(--shadow)" />
+        <figcaption>La modernización del vending (pagos cashless, IoT y surtidos saludables) habilita nuevos casos de uso.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ===================== MERCADO ===================== -->
+    <section id="analisis-mercado" role="region" aria-labelledby="h-mercado">
+      <h2 id="h-mercado">Tamaño de Mercado (Valladolid · CyL · España)</h2>
+      <div class="grid cols-2">
+        <article>
+          <h3>Valladolid</h3>
+          <p>Ciudad idónea para piloto por densidad de <strong>centros educativos, campus universitarios (UVA, UEMC), 2 hospitales de referencia y ~70 gimnasios</strong> (crecimiento continuado de plazas de fitness). <a class="source" href="https://www.eldiadevalladolid.com/noticia/z336a170d-d136-45d4-8a4d41d13f2cf99a/202501/el-bum-de-los-gimnasios-no-deja-de-crecer-en-la-capital" target="_blank" rel="noopener">Datos locales de fitness</a>.</p>
+          <p>Penetración factible inicial: 3–5 máquinas con potencial de escalar a 15–30 en 12–24 meses si la rotación acompaña.</p>
+        </article>
+        <article>
+          <h3>Castilla y León</h3>
+          <p>~<strong>1.350 centros educativos no universitarios</strong>, ~<strong>10 universidades</strong>, hospitales provinciales y cientos de gimnasios. Dispersión geográfica: mayor reto logístico, pero menor saturación competitiva.</p>
+        </article>
+      </div>
+      <div class="grid cols-2">
+        <article>
+          <h3>España</h3>
+          <ul>
+            <li>~<strong>27.000 colegios</strong> (infantil, primaria, secundaria) <a class="source" href="https://colegiosrc.es/cuantos-colegios-publicos-y-privados-hay-en-espana-preguntas-frecuentes/" target="_blank" rel="noopener">ColegiosRC</a></li>
+            <li><strong>91 universidades</strong> (50 públicas, 41 privadas) <a class="source" href="https://www.rtve.es/noticias/20230221/universidades-privadas-oferta-master/2423442.shtml" target="_blank" rel="noopener">RTVE</a></li>
+            <li><strong>~832 hospitales</strong> <a class="source" href="https://www.immedicohospitalario.es/noticia/40596/espana-tenia-832-hospitales-en-2022-entre-los-que-destacan-los-hosp.html" target="_blank" rel="noopener">IM Médico</a></li>
+            <li><strong>~4.561 gimnasios</strong> y 5,4 M usuarios (16,5% de la población) <a class="source" href="https://www.obsbusiness.school/actualidad/informes-de-investigacion/informe-obs-la-industria-del-deporte-y-el-fitness" target="_blank" rel="noopener">OBS 2024</a></li>
+          </ul>
+          <p>Sector vending alimentos/bebidas ≈ <strong>1.275 M€ (2023)</strong>, +9% a/a; total incluyendo tabaco ≈ <strong>2.150 M€</strong>. <a class="source" href="https://www.restauracioncolectiva.com/n/el-sector-de-ivendingi-crece-por-tercer-ano-consecutivo-y-alcanza-los-2150-millones-de-euros" target="_blank" rel="noopener">Observatorio DBK</a></p>
+        </article>
+        <article class="chart-wrap">
+          <figure aria-labelledby="cap-ubicaciones">
+            <canvas id="chartUbicaciones" role="img" aria-label="Barras apiladas con ubicaciones potenciales: escuelas, universidades, hospitales y gimnasios en Valladolid, Castilla y León y España"></canvas>
+            <figcaption id="cap-ubicaciones">Ubicaciones objetivo: orden de magnitud (Valladolid vs CyL vs España).</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== TENDENCIAS ===================== -->
+    <section id="tendencias" role="region" aria-labelledby="h-tendencias">
+      <h2 id="h-tendencias">Tendencias que Respaldan la Idea</h2>
+      <ul>
+        <li><strong>Salud y hábitos:</strong> aumento del consumo saludable en España (+41% en canales online desde 2020). <a class="source" href="https://www.hostelvending.com/noticias-vending/espa-a-reafirma-su-consumo-de-comida-saludable-con-un-aumento-del-41" target="_blank" rel="noopener">HostelVending</a></li>
+        <li><strong>Política pública:</strong> prohibición de bollería y bebidas azucaradas en centros educativos (RD anunciado 2025). <a class="source" href="https://elpais.com/educacion/2025-03-03/consumo-prohibira-la-venta-de-bebidas-azucaradas-y-energeticas-y-la-bolleria-industrial-en-colegios-e-institutos.html" target="_blank" rel="noopener">El País</a></li>
+        <li><strong>Vending 4.0:</strong> pagos <em>contactless</em>, IoT y <em>smart fridges</em> facilitan ofrecer producto fresco y analítica de surtido.</li>
+        <li><strong>Casos reales:</strong> Delikia reporta 42% de surtido <em>healthy</em>; Unica lanza snacks vegetales con vida útil 15 días. <a class="source" href="https://delikia.es/vending-saludable/" target="_blank" rel="noopener">Delikia</a> · <a class="source" href="https://fruittoday.com/unica-impulsa-el-vending-saludable-en-espana/" target="_blank" rel="noopener">FruitToday</a></li>
+      </ul>
+    </section>
+
+    <!-- ===================== BARRERAS ===================== -->
+    <section id="barreras" role="region" aria-labelledby="h-barreras">
+      <h2 id="h-barreras">Barreras de Entrada</h2>
+      <ul>
+        <li><strong>Regulatorias:</strong> cumplimiento nutricional estricto en escuelas; etiquetado, alérgenos, APPCC y cadena de frío en sanitarios.</li>
+        <li><strong>Operativas:</strong> reposición frecuente de perecederos; energía y vigilancia de temperatura; mantenimiento e higiene.</li>
+        <li><strong>Económicas:</strong> inversión en equipos; márgenes sensibles al precio/rotación; comisiones de TPV.</li>
+        <li><strong>Culturales:</strong> cambiar hábitos (de “capricho” a saludable) requiere marketing en sitio y educación.</li>
+      </ul>
+      <p class="note"><strong>Mitigación:</strong> surtido modular por ubicación; renting para limitar CAPEX; IoT/telemetría; acuerdos con proveedores locales; campañas de lanzamiento.</p>
+    </section>
+
+    <!-- ===================== COMPETENCIA ===================== -->
+    <section id="competencia" role="region" aria-labelledby="h-competencia">
+      <h2 id="h-competencia">Competidores y Referentes</h2>
+      <div class="grid cols-3">
+        <article>
+          <h3>Grandes operadores</h3>
+          <ul>
+            <li>Selecta (micromercados, <em>smart fridge</em>)</li>
+            <li>Delikia (42% healthy) <a class="source" href="https://delikia.es/vending-saludable/" target="_blank" rel="noopener">Fuente</a></li>
+            <li>Alliance Vending, IVS Ibérica</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Especializados healthy</h3>
+          <ul>
+            <li>Unica (snacks vegetales, vida útil 15 días) <a class="source" href="https://fruittoday.com/unica-impulsa-el-vending-saludable-en-espana/" target="_blank" rel="noopener">Fuente</a></li>
+          </ul>
+        </article>
+        <article>
+          <h3>Fabricantes</h3>
+          <ul>
+            <li>Jofemar · Azkoyen · Necta (Evoca)</li>
+            <li>Soluciones con refrigeración, pago sin efectivo, telemetría</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== OPORTUNIDADES ===================== -->
+    <section id="oportunidades" role="region" aria-labelledby="h-oportunidades">
+      <h2 id="h-oportunidades">Oportunidades de Diferenciación</h2>
+      <ul>
+        <li>Posicionamiento 100% saludable (alineado con normativa escolar y sanitaria).</li>
+        <li>Surtido curado por segmento (colegio, universidad, hospital, gimnasio, oficinas/coworking).</li>
+        <li>Alianzas locales (productores, nutricionistas), envase sostenible y trazabilidad.</li>
+        <li>Experiencia: pagos fluidos, app de fidelización, analítica de ventas.</li>
+      </ul>
+    </section>
+
+    <!-- ===================== CLIENTE IDEAL ===================== -->
+    <section id="cliente-ideal" role="region" aria-labelledby="h-cliente">
+      <h2 id="h-cliente">Perfil de Cliente Ideal</h2>
+      <div class="grid cols-2">
+        <article>
+          <h3>Colegios e institutos</h3>
+          <p>Estudiantes (6–18) + familias/AMPA como decisores. Precio accesible, formatos individuales, sin azúcar añadida.</p>
+        </article>
+        <article>
+          <h3>Universidades</h3>
+          <p>Jóvenes 18–25 y personal PDI/PAS. Bebidas funcionales, barritas proteicas, pago móvil, promos en exámenes.</p>
+        </article>
+        <article>
+          <h3>Hospitales</h3>
+          <p>Personal 24/7, pacientes y visitantes. Opciones específicas (sin azúcar/sin gluten/baja sal), frescos y saciantes.</p>
+        </article>
+        <article>
+          <h3>Gimnasios & coworking</h3>
+          <p>Alta motivación salud/rendimiento. Proteínas listas, isotónicas sin azúcar, frutos secos, packs post-entreno.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== INFORME FINANCIERO ===================== -->
+    <section id="finanzas" role="region" aria-labelledby="h-finanzas">
+      <h2 id="h-finanzas">📊 Informe Financiero Inicial (Piloto Valladolid · Capital 20.000&nbsp;€)</h2>
+
+      <article aria-labelledby="h-obj">
+        <h3 id="h-obj">Contexto y objetivo</h3>
+        <p>Evaluar si tiene sentido invertir <strong>20.000&nbsp;€</strong> como capital inicial para lanzar un piloto de <strong>3–5 máquinas</strong> de vending saludable en Valladolid, con opción de escalar a Castilla y León y, posteriormente, a toda España. Se modelan <em>escenarios</em> (conservador, intermedio, optimista), <em>modelos de adquisición</em> (compra, leasing, renting) y un <em>flujo de caja de 12 meses</em>, además de proyecciones a 3 años.</p>
+      </article>
+
+      <!-- ===== Controls -->
+      <div class="controls" role="form" aria-label="Parámetros financieros">
+        <label for="selEscenario">Escenario:&nbsp;</label>
+        <select id="selEscenario" aria-label="Escenario (conservador, intermedio, optimista)">
+          <option value="conservador">Conservador</option>
+          <option value="intermedio" selected>Intermedio</option>
+          <option value="optimista">Optimista</option>
+        </select>
+
+        <label for="selModelo">Modelo de adquisición:&nbsp;</label>
+        <select id="selModelo" aria-label="Modelo de adquisición (renting, leasing, compra)">
+          <option value="renting" selected>Renting</option>
+          <option value="leasing">Leasing</option>
+          <option value="compra">Compra</option>
+        </select>
+
+        <label for="numMaquinas">N.º de máquinas:&nbsp;</label>
+        <select id="numMaquinas" aria-label="Número de máquinas">
+          <option>3</option>
+          <option selected>4</option>
+          <option>5</option>
+        </select>
+
+        <label for="precioCompra">Precio compra estimado/ud (€):&nbsp;</label>
+        <input id="precioCompra" type="number" min="4000" max="12000" step="100" value="7000" aria-label="Precio de compra estimado por máquina en euros" />
+
+        <label for="rentaMensual">Cuota renting/ud (€):&nbsp;</label>
+        <input id="rentaMensual" type="number" min="80" max="350" step="5" value="180" aria-label="Cuota mensual de renting por máquina en euros" />
+
+        <label for="cuotaLeasing">Cuota leasing/ud (€):&nbsp;</label>
+        <input id="cuotaLeasing" type="number" min="120" max="400" step="5" value="230" aria-label="Cuota mensual de leasing por máquina en euros" />
+      </div>
+
+      <!-- ===== KPIs -->
+      <div id="kpis" class="kpi" aria-live="polite">
+        <!-- KPIs dinámicos -->
+      </div>
+
+      <!-- ===== Hipótesis -->
+      <article aria-labelledby="h-hipotesis">
+        <h3 id="h-hipotesis">Hipótesis y supuestos de partida</h3>
+        <ul>
+          <li><strong>Ventas diarias por máquina</strong>: <span class="badge">15</span> (conservador) · <span class="badge">25</span> (intermedio) · <span class="badge">40</span> (optimista).</li>
+          <li><strong>Ticket medio</strong>: <span class="badge">2,00&nbsp;€</span> · <span class="badge">2,40&nbsp;€</span> · <span class="badge">2,80&nbsp;€</span> según escenario.</li>
+          <li><strong>Margen bruto antes de comisiones</strong>: <span class="badge">40%</span> · <span class="badge">45%</span> · <span class="badge">50%</span>.</li>
+          <li><strong>Comisión TPV</strong>: <span class="badge">1,5%</span> sobre ventas (promedio mercado pagos <em>contactless</em>).</li>
+          <li><strong>Desperdicio/mermas</strong>: <span class="badge">5%</span> del coste de producto (más sensible en frescos).</li>
+          <li><strong>Días de operación</strong>: <span class="badge">26</span> días/mes (ajustado por fines de semana y calendario).</li>
+          <li><strong>OPEX/ud</strong> (energía, conectividad, mantenimiento, logística, limpieza): <span class="badge">240&nbsp;€/mes</span> (promedio) + <em>renta/leasing si aplica</em>.</li>
+          <li><strong>Carga inicial de stock/ud</strong>: <span class="badge">500&nbsp;€</span>; <strong>vinilos/branding/ud</strong>: <span class="badge">200&nbsp;€</span>; <strong>TPV/ud</strong> (dispositivo): <span class="badge">150&nbsp;€</span>.</li>
+          <li><strong>Instalación/ud</strong>: <span class="badge">150&nbsp;€</span>; <strong>depósito renting</strong>: <span class="badge">2 meses</span> de cuota (habitual).</li>
+        </ul>
+        <p class="muted">Rangos contrastados con práctica sectorial (fabricantes Jofemar/Azkoyen/Necta; operadores Delikia/Alliance/Selecta) y prensa/observatorios: <a class="source" href="https://www.restauracioncolectiva.com/n/el-sector-de-ivendingi-crece-por-tercer-ano-consecutivo-y-alcanza-los-2150-millones-de-euros" target="_blank" rel="noopener">DBK 2024</a>, <a class="source" href="https://delikia.es/vending-saludable/" target="_blank" rel="noopener">Delikia</a>, <a class="source" href="https://teycoval.com/tendencias-del-vending-para-2024-innovacion-tecnologia-y-sostenibilidad/" target="_blank" rel="noopener">Teycoval</a>.</p>
+      </article>
+
+      <!-- ===== Costes de equipos -->
+      <article aria-labelledby="h-coste-equipos">
+        <h3 id="h-coste-equipos">Coste de máquinas por modelo de adquisición</h3>
+        <div class="grid cols-3">
+          <div class="card">
+            <h4>Compra directa</h4>
+            <ul>
+              <li>Precio/ud (refrigerada + pagos + telemetría): <span class="badge">5.000–10.000&nbsp;€</span></li>
+              <li>CAPEX alto, sin renta mensual</li>
+              <li>Depreciación 5–7 años; mantenimiento fuera de garantía</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Leasing (36–60 meses)</h4>
+            <ul>
+              <li>Cuota/ud: <span class="badge">~200–280&nbsp;€/mes</span> (según precio y plazo)</li>
+              <li>Opción de compra al final (valor residual)</li>
+              <li>Mejor para preservar caja, coste financiero asociado</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Renting</h4>
+            <ul>
+              <li>Cuota/ud: <span class="badge">~120–220&nbsp;€/mes</span></li>
+              <li>Mantenimiento incluido habitual</li>
+              <li>Flexibilidad para renovar equipos</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== OPEX -->
+      <article aria-labelledby="h-costes-op">
+        <h3 id="h-costes-op">Costes logísticos, mantenimiento y operación</h3>
+        <table aria-label="Tabla de costes operativos mensuales estimados por máquina">
+          <thead><tr><th>Concepto</th><th>€/mes · ud</th><th>Notas</th></tr></thead>
+          <tbody>
+            <tr><td>Energía</td><td>25</td><td>Máquina refrigerada eficiente</td></tr>
+            <tr><td>Conectividad/telemetría</td><td>15</td><td>SIM/IOT + plataforma</td></tr>
+            <tr><td>Mantenimiento/limpieza</td><td>40</td><td>Rutinas + consumibles</td></tr>
+            <tr><td>Logística reposición</td><td>150</td><td>Combustible/tiempo</td></tr>
+            <tr><td><strong>Subtotal OPEX</strong></td><td><strong>240</strong></td><td>Sin incluir cuota de equipo</td></tr>
+            <tr><td>Renting (si aplica)</td><td>180</td><td>Ejemplo medio</td></tr>
+            <tr><td>Leasing (si aplica)</td><td>230</td><td>Ejemplo medio</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <!-- ===== Ingresos y márgenes -->
+      <article aria-labelledby="h-ingresos">
+        <h3 id="h-ingresos">Estimación de ingresos y márgenes</h3>
+        <div class="grid cols-2">
+          <div class="chart-wrap">
+            <figure aria-labelledby="cap-revenue">
+              <canvas id="chartRevenue" role="img" aria-label="Ingresos mensuales por máquina y flota según escenario"></canvas>
+              <figcaption id="cap-revenue">Ingresos/mes por máquina y flota (3–5 uds) según escenario.</figcaption>
+            </figure>
+          </div>
+          <div>
+            <p>La <strong>contribución</strong> por cada euro de venta depende de: margen bruto del surtido, comisión TPV (1,5%) y mermas (5% del coste). El <strong>umbral de rentabilidad</strong> por máquina se calcula como:</p>
+            <p class="note"><code>Ventas&nbsp;breakeven&nbsp;≈&nbsp;Costes&nbsp;fijos&nbsp;/&nbsp;(Margen&nbsp;bruto&nbsp;−&nbsp;Comisión)</code></p>
+            <ul id="ulBreakeven"></ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== Escenarios y flujo de caja -->
+      <article aria-labelledby="h-escenarios">
+        <h3 id="h-escenarios">Escenarios financieros y flujo de caja (12 meses)</h3>
+        <div class="grid cols-2">
+          <div class="chart-wrap">
+            <figure aria-labelledby="cap-cash">
+              <canvas id="chartCash" role="img" aria-label="Curva de caja acumulada 12 meses"></canvas>
+              <figcaption id="cap-cash">Caja acumulada 12 meses (incluye inversión inicial y OPEX).</figcaption>
+            </figure>
+          </div>
+          <div>
+            <table aria-label="Tabla de resultados mensuales promedio">
+              <thead><tr><th>Indicador (mes)</th><th>Por máquina</th><th>Flota</th></tr></thead>
+              <tbody id="tbodyMes"></tbody>
+            </table>
+            <p id="alertCapital" class="note"></p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== Comparativa de modelos -->
+      <article aria-labelledby="h-modelos">
+        <h3 id="h-modelos">Comparativa de modelos de adquisición (impacto 12–36 meses)</h3>
+        <table aria-label="Comparativa de TCO y caja por modelo de adquisición">
+          <thead>
+            <tr>
+              <th>Modelo</th><th>CAPEX inicial</th><th>Cuota mensual</th><th>OPEX base/ud</th><th>Depreciación/ud</th><th>TCO 36m (estim.)</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyModelos"></tbody>
+        </table>
+        <p class="muted">Nota: valores orientativos para decisión estratégica; exactos según proveedor (Jofemar, Azkoyen, Necta/Evoca, etc.).</p>
+      </article>
+
+      <!-- ===== Riesgos -->
+      <article aria-labelledby="h-riesgos">
+        <h3 id="h-riesgos">Análisis de riesgos</h3>
+        <ul>
+          <li><strong>Operativos</strong>: averías, roturas de stock, mermas en fresco.</li>
+          <li><strong>Logísticos</strong>: rutas ineficientes, costes de combustible/tiempo.</li>
+          <li><strong>Legales/regulatorios</strong>: etiquetado, alérgenos, APPCC, contratos en centros públicos.</li>
+          <li><strong>Comerciales</strong>: baja rotación por surtido/precio; competencia con cafeterías o grandes operadores.</li>
+        </ul>
+        <p class="note">Mitigación: telemetría para reposición inteligente, mantenimiento preventivo, surtido por ubicación, acuerdos de nivel de servicio (SLA), pilotos con <em>KPIs</em> claros, cláusulas de salida.</p>
+      </article>
+
+      <!-- ===== Proyecciones 3 años -->
+      <article aria-labelledby="h-proyecciones">
+        <h3 id="h-proyecciones">Proyecciones a 3 años (crecimiento escalonado)</h3>
+        <div class="grid cols-2">
+          <div class="chart-wrap">
+            <figure aria-labelledby="cap-proy">
+              <canvas id="chartProyeccion" role="img" aria-label="Ingresos y margen bruto proyectados a 3 años con escalado"></canvas>
+              <figcaption id="cap-proy">Proyección: flota crece al 150% (año 2) y 200% (año 3) si KPIs ≥ escenario intermedio.</figcaption>
+            </figure>
+          </div>
+          <div>
+            <ul id="ulProyeccion"></ul>
+            <p class="muted">Incluye reinversión en nuevas máquinas (preferencia por leasing/renting en fase de expansión) y mejora de rutas para eficiencia.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== Conclusiones y próximos pasos (finanzas) -->
+      <article aria-labelledby="h-concfin">
+        <h3 id="h-concfin">Conclusiones y recomendaciones (financieras)</h3>
+        <ul>
+          <li><strong>Viabilidad:</strong> con 20.000&nbsp;€ y <em>renting</em> de <strong>4 máquinas</strong>, el proyecto es <span class="ok">viable</span> en escenarios intermedio/optimista (payback ≈ 12–16 meses).</li>
+          <li><strong>Modelo recomendado (piloto):</strong> <em>Renting</em> (flexible, menor CAPEX) con opción de <em>leasing</em> para expansión en año 2–3.</li>
+          <li><strong>KPIs críticos:</strong> ≥ 25 ventas/día y ticket ≥ 2,40&nbsp;€ (o mejorar margen vía surtido/local).</li>
+          <li><strong>Riesgo clave:</strong> mermas en fresco; empezar con mix “semiperecedero” y escalar fresco según rotación real.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ===================== CONCLUSIONES GLOBALES ===================== -->
+    <section id="conclusiones" role="region" aria-labelledby="h-conclu">
+      <h2 id="h-conclu">Conclusiones globales</h2>
+      <p>Existe un encaje claro entre <strong>demanda</strong> (consumo saludable), <strong>necesidad institucional</strong> (normativa en escuelas y coherencia en hospitales) y <strong>capacidad tecnológica</strong> (vending 4.0) para un piloto de vending saludable en Valladolid con capital de 20.000&nbsp;€. La ejecución deberá priorizar ubicaciones de alto tráfico, surtido curado y operaciones impecables para alcanzar el punto de equilibrio por máquina (~950–1.100&nbsp;€/mes) y un payback en ~12–16 meses.</p>
+    </section>
+
+    <!-- ===================== REFERENCIAS ===================== -->
+    <section id="referencias" role="region" aria-labelledby="h-refs">
+      <h2 id="h-refs">Referencias y lecturas</h2>
+      <ol>
+        <li><a class="source" href="https://colegiosrc.es/cuantos-colegios-publicos-y-privados-hay-en-espana-preguntas-frecuentes/" target="_blank" rel="noopener">N.º de colegios en España</a></li>
+        <li><a class="source" href="https://www.rtve.es/noticias/20230221/universidades-privadas-oferta-master/2423442.shtml" target="_blank" rel="noopener">N.º de universidades en España</a></li>
+        <li><a class="source" href="https://www.immedicohospitalario.es/noticia/40596/espana-tenia-832-hospitales-en-2022-entre-los-que-destacan-los-hosp.html" target="_blank" rel="noopener">N.º de hospitales (2022)</a></li>
+        <li><a class="source" href="https://www.obsbusiness.school/actualidad/informes-de-investigacion/informe-obs-la-industria-del-deporte-y-el-fitness" target="_blank" rel="noopener">Gimnasios y tasa de penetración fitness</a></li>
+        <li><a class="source" href="https://www.restauracioncolectiva.com/n/el-sector-de-ivendingi-crece-por-tercer-ano-consecutivo-y-alcanza-los-2150-millones-de-euros" target="_blank" rel="noopener">Sector vending (DBK 2024)</a></li>
+        <li><a class="source" href="https://www.hostelvending.com/noticias-vending/espa-a-reafirma-su-consumo-de-comida-saludable-con-un-aumento-del-41" target="_blank" rel="noopener">Auge consumo saludable</a></li>
+        <li><a class="source" href="https://elpais.com/educacion/2025-03-03/consumo-prohibira-la-venta-de-bebidas-azucaradas-y-energeticas-y-la-bolleria-industrial-en-colegios-e-institutos.html" target="_blank" rel="noopener">Prohibiciones en colegios</a></li>
+        <li><a class="source" href="https://fruittoday.com/unica-impulsa-el-vending-saludable-en-espana/" target="_blank" rel="noopener">Caso Unica (vending vegetal)</a></li>
+        <li><a class="source" href="https://delikia.es/vending-saludable/" target="_blank" rel="noopener">Delikia · Vending saludable</a></li>
+        <li><a class="source" href="https://teycoval.com/tendencias-del-vending-para-2024-innovacion-tecnologia-y-sostenibilidad/" target="_blank" rel="noopener">Tendencias vending (EVA/GfK)</a></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer role="contentinfo" class="wrap">
+    <p>&copy; 2025 · Informe interactivo elaborado para estudiar la viabilidad de un negocio de vending saludable (Valladolid → CyL → España).</p>
+    <p>Contacto: <a class="source" href="mailto:info@vendingsaludable.es">info@vendingsaludable.es</a></p>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Utilidades numéricas
+    const fmtEUR = n => (new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0})).format(n);
+    const fmtEUR2 = n => (new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:2})).format(n);
+    const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
+
+    // Parámetros base y escenarios
+    const escenarios = {
+      conservador: { ventasDia: 15, ticket: 2.00, margenBruto: 0.40 },
+      intermedio:  { ventasDia: 25, ticket: 2.40, margenBruto: 0.45 },
+      optimista:   { ventasDia: 40, ticket: 2.80, margenBruto: 0.50 }
+    };
+    const paramsFijos = {
+      diasMes: 26,
+      comisionTPV: 0.015,
+      mermaSobreCoste: 0.05, // 5% sobre COGS
+      opexBaseUd: 240,       // energía + conectividad + mantenimiento + logística
+      stockInicialUd: 500,
+      brandingUd: 200,
+      tpvUd: 150,
+      instalacionUd: 150,
+      depositoRentingMeses: 2,
+      depreciacionMeses: 60 // compra (5 años)
+    };
+
+    // Controles
+    const selEscenario = document.getElementById('selEscenario');
+    const selModelo    = document.getElementById('selModelo');
+    const numMaquinas  = document.getElementById('numMaquinas');
+    const precioCompra = document.getElementById('precioCompra');
+    const rentaMensual = document.getElementById('rentaMensual');
+    const cuotaLeasing = document.getElementById('cuotaLeasing');
+
+    // Elementos de salida
+    const kpis = document.getElementById('kpis');
+    const ulBE = document.getElementById('ulBreakeven');
+    const tbodyMes = document.getElementById('tbodyMes');
+    const alertCapital = document.getElementById('alertCapital');
+    const tbodyModelos = document.getElementById('tbodyModelos');
+    const ulProy = document.getElementById('ulProyeccion');
+
+    // Gráficos
+    let chartUbicaciones, chartRevenue, chartCash, chartProy;
+
+    // ---- Cálculos de P&L mensual por máquina ----
+    function calculaMensualPorMaquina(esc, modelo, cuotas, precioUd){
+      const {ventasDia, ticket, margenBruto} = escenarios[esc];
+      const ventasMes = ventasDia * paramsFijos.diasMes * ticket; // ingresos
+      // Estructura de costes variables:
+      const cogsShare = 1 - margenBruto;               // fracción coste producto
+      const cogsConMerma = cogsShare * (1 + paramsFijos.mermaSobreCoste); // añade mermas
+      const comisionShare = paramsFijos.comisionTPV;   // sobre ventas
+      const margenContribucion = 1 - cogsConMerma - comisionShare;
+      // Costes fijos:
+      const opex = paramsFijos.opexBaseUd;
+      let cuotaEquipo = 0, depreciacion = 0;
+      if(modelo === 'renting') cuotaEquipo = cuotas.renting;
+      if(modelo === 'leasing') cuotaEquipo = cuotas.leasing;
+      if(modelo === 'compra')  depreciacion = precioUd / paramsFijos.depreciacionMeses; // amortización contable
+
+      const margenContribucionEUR = ventasMes * margenContribucion;
+      const ebitda = margenContribucionEUR - opex - cuotaEquipo;
+      const ebit = ebitda - depreciacion;
+
+      return {
+        ventasMes, margenBruto, cogsShare, cogsConMerma, comisionShare, margenContribucion,
+        opex, cuotaEquipo, depreciacion, ebitda, ebit
+      };
+    }
+
+    // ---- Inversión inicial según modelo ----
+    function calculaInversionInicial(modelo, uds, precioUd, cuotas){
+      const basePorUd = paramsFijos.stockInicialUd + paramsFijos.brandingUd + paramsFijos.tpvUd + paramsFijos.instalacionUd;
+      let total = basePorUd * uds;
+      let detalle = [
+        ['Stock inicial', paramsFijos.stockInicialUd*uds],
+        ['Branding/vinilos', paramsFijos.brandingUd*uds],
+        ['TPV (dispositivo)', paramsFijos.tpvUd*uds],
+        ['Instalación', paramsFijos.instalacionUd*uds]
+      ];
+
+      if(modelo==='renting'){
+        const deposito = cuotas.renting * paramsFijos.depositoRentingMeses * uds;
+        total += deposito;
+        detalle.push(['Depósito renting (2 meses)', deposito]);
+      } else if(modelo==='leasing'){
+        // Supuesto conservador: sin entrada; algunos contratos aplican comisión/apertura
+        // Puede añadirse una comisión simbólica si se desea modelizar.
+      } else if(modelo==='compra'){
+        const equipos = precioUd * uds;
+        total += equipos;
+        detalle.push(['Compra equipos', equipos]);
+      }
+      return { total, detalle };
+    }
+
+    // ---- Breakeven por máquina ----
+    function calculaBreakevenPorMaquina(esc, modelo, cuotas, precioUd){
+      const { margenBruto } = escenarios[esc];
+      const contrib = margenBruto - paramsFijos.comisionTPV - (1 - margenBruto) * paramsFijos.mermaSobreCoste; // aprox
+      const fijos = paramsFijos.opexBaseUd + (modelo==='renting'?cuotas.renting: modelo==='leasing'?cuotas.leasing: 0);
+      const beVentas = fijos / Math.max(contrib, 0.01);
+      return { beVentas, contrib, fijos };
+    }
+
+    // ---- Flujo de caja 12 meses (flota) ----
+    function calculaFlujo12m(esc, modelo, uds, cuotas, precioUd, capital){
+      const pm = calculaMensualPorMaquina(esc, modelo, cuotas, precioUd);
+      const inv = calculaInversionInicial(modelo, uds, precioUd, cuotas);
+      const mensualFlota = {
+        ingresos: pm.ventasMes * uds,
+        cogs: pm.ventasMes * pm.cogsConMerma * uds,
+        comisiones: pm.ventasMes * pm.comisionShare * uds,
+        opex: pm.opex * uds,
+        cuotas: pm.cuotaEquipo * uds,
+        depreciacion: pm.depreciacion * uds,
+      };
+      const ebitda = mensualFlota.ingresos - mensualFlota.cogs - mensualFlota.comisiones - mensualFlota.opex - mensualFlota.cuotas;
+      const ebit = ebitda - mensualFlota.depreciacion;
+      // Curva de caja (sin intereses/financiación externa). Sup: pago stock inicial en t=0; no capitalizamos stock de reposición (ya en COGS mensual)
+      const meses = Array.from({length:12}, (_,i)=>i+1);
+      const caja = [];
+      let acumulada = capital - inv.total; // salida inicial
+      meses.forEach((m, idx)=>{
+        // ramp-up: 1-3 (80%), 4-6 (90%), 7-12 (100%) de ventas
+        const factor = (idx<3)?0.8 : (idx<6)?0.9 : 1.0;
+        const ing = mensualFlota.ingresos * factor;
+        const cogs = mensualFlota.cogs * factor;
+        const comi = mensualFlota.comisiones * factor;
+        const opex = mensualFlota.opex;
+        const cuotas = mensualFlota.cuotas;
+        const out = cogs + comi + opex + cuotas;
+        const neto = ing - out;
+        acumulada += neto;
+        caja.push({ mes:m, ing, out, neto, acumulada });
+      });
+      return { mensualFlota, pm, inv, caja };
+    }
+
+    // ---- Proyección 3 años (crecimiento escalonado) ----
+    function proyeccion3y(esc, modelo, uds, cuotas, precioUd){
+      const pm = calculaMensualPorMaquina(esc, modelo, cuotas, precioUd);
+      const planUds = [uds, Math.round(uds*1.5), uds*2]; // año1, año2 (+50%), año3 (+100%)
+      const anios = [1,2,3].map((year, idx)=>{
+        const u = planUds[idx];
+        const ing = pm.ventasMes * 12 * u;
+        const cogs = pm.ventasMes * pm.cogsConMerma * 12 * u;
+        const comi = pm.ventasMes * pm.comisionShare * 12 * u;
+        const opex = pm.opex * 12 * u;
+        const cuotas = pm.cuotaEquipo * 12 * u;
+        const ebitda = ing - cogs - comi - opex - cuotas;
+        const dep = pm.depreciacion * 12 * u;
+        const ebit = ebitda - dep;
+        return { year, uds:u, ing, ebitda, ebit };
+      });
+      return { planUds, anios };
+    }
+
+    // ---- Render KPIs + tablas + gráficos ----
+    let g1,g2,g3,g4;
+    function render(){
+      const esc = selEscenario.value;
+      const modelo = selModelo.value;
+      const uds = parseInt(numMaquinas.value,10);
+      const precioUd = clamp(parseFloat(precioCompra.value||7000), 4000, 12000);
+      const cuotas = {
+        renting: clamp(parseFloat(rentaMensual.value||180), 80, 350),
+        leasing: clamp(parseFloat(cuotaLeasing.value||230), 120, 400)
+      };
+
+      // Cálculos
+      const inv = calculaInversionInicial(modelo, uds, precioUd, cuotas);
+      const capInicial = 20000; // capital disponible
+      const f12 = calculaFlujo12m(esc, modelo, uds, cuotas, precioUd, capInicial);
+      const pm = f12.pm;
+      const be = calculaBreakevenPorMaquina(esc, modelo, cuotas, precioUd);
+      const pr = proyeccion3y(esc, modelo, uds, cuotas, precioUd);
+
+      // KPIs
+      kpis.innerHTML = `
+        <div class="card"><h4>Ventas/mes · ud</h4><div>${fmtEUR(Math.round(pm.ventasMes))}</div><div class="muted">(${esc})</div></div>
+        <div class="card"><h4>Contribución · € por €</h4><div>${(pm.margenContribucion*100).toFixed(1)}%</div><div class="muted">Tras COGS+mermas+TPV</div></div>
+        <div class="card"><h4>EBITDA · ud/mes</h4><div class="${pm.ebitda>=0?'ok':'danger'}">${fmtEUR(Math.round(pm.ebitda))}</div><div class="muted">Sin depreciación</div></div>
+        <div class="card"><h4>EBIT · ud/mes</h4><div class="${pm.ebit>=0?'ok':'danger'}">${fmtEUR(Math.round(pm.ebit))}</div><div class="muted">Con amortización</div></div>
+        <div class="card"><h4>Breakeven · ud/mes</h4><div>${fmtEUR(Math.round(be.beVentas))}</div><div class="muted">Ventas mínimas</div></div>
+        <div class="card"><h4>Inversión inicial</h4><div>${fmtEUR(inv.total)}</div><div class="muted">${modelo}</div></div>
+      `;
+
+      // Tabla de mes típico (flota)
+      const mf = f12.mensualFlota;
+      tbodyMes.innerHTML = `
+        <tr><td>Ingresos</td><td>${fmtEUR(Math.round(pm.ventasMes))}</td><td>${fmtEUR(Math.round(mf.ingresos))}</td></tr>
+        <tr><td>COGS + mermas</td><td>${fmtEUR(Math.round(pm.ventasMes*pm.cogsConMerma))}</td><td>${fmtEUR(Math.round(mf.cogs))}</td></tr>
+        <tr><td>Comisiones TPV</td><td>${fmtEUR(Math.round(pm.ventasMes*pm.comisionShare))}</td><td>${fmtEUR(Math.round(mf.comisiones))}</td></tr>
+        <tr><td>OPEX</td><td>${fmtEUR(pm.opex)}</td><td>${fmtEUR(mf.opex)}</td></tr>
+        <tr><td>Cuotas equipo</td><td>${fmtEUR(pm.cuotaEquipo)}</td><td>${fmtEUR(mf.cuotas)}</td></tr>
+        <tr><td><strong>EBITDA</strong></td><td><strong>${fmtEUR(Math.round(pm.ebitda))}</strong></td><td><strong>${fmtEUR(Math.round(f12.caja[11].ing - (f12.caja[11].out - mf.depreciacion)))}</strong></td></tr>
+      `;
+
+      // Alerta capital
+      alertCapital.innerHTML = (inv.total>capInicial)
+        ? `💡 <strong>Advertencia:</strong> la inversión inicial requerida (${fmtEUR(inv.total)}) supera el capital disponible de ${fmtEUR(capInicial)}. Ajusta <em>modelo</em>, <em>n.º de máquinas</em> o <em>parámetros</em>.`
+        : `✅ La inversión inicial (${fmtEUR(inv.total)}) cabe en el capital disponible de ${fmtEUR(capInicial)}.`;
+
+      // Breakeven list
+      ulBE.innerHTML = `
+        <li>Costes fijos/ud: ${fmtEUR(Math.round(be.fijos))} · Contribución por €: ${(be.contrib*100).toFixed(1)}% → Ventas mínimas: <strong>${fmtEUR(Math.round(be.beVentas))}/mes</strong>.</li>
+        <li>Ej.: con ticket ${fmtEUR2(escenarios[esc].ticket)} → ~${Math.ceil(be.beVentas/escenarios[esc].ticket)} € en tickets/mes (~${Math.ceil((be.beVentas/escenarios[esc].ticket)/paramsFijos.diasMes)} ventas/día).</li>
+      `;
+
+      // Comparativa de modelos (TCO simple 36m)
+      const opexUd = paramsFijos.opexBaseUd;
+      const depUd = precioUd/paramsFijos.depreciacionMeses;
+      const modelos = [
+        { nombre:'Compra', capex: precioUd*uds, cuota: 0,       opex: opexUd, dep: depUd, tco36: (precioUd*uds)+(opexUd*36*uds) },
+        { nombre:'Leasing', capex: 0,            cuota: cuotas.leasing, opex: opexUd, dep: 0,   tco36: (cuotas.leasing*36*uds)+(opexUd*36*uds) },
+        { nombre:'Renting', capex: cuotas.renting*paramsFijos.depositoRentingMeses*uds, cuota: cuotas.renting, opex: opexUd, dep: 0, tco36: (cuotas.renting*36*uds)+(opexUd*36*uds) }
+      ];
+      tbodyModelos.innerHTML = modelos.map(m=>`
+        <tr>
+          <td>${m.nombre}</td>
+          <td>${fmtEUR(m.capex)}</td>
+          <td>${fmtEUR(m.cuota)}/ud</td>
+          <td>${fmtEUR(m.opex)}/ud</td>
+          <td>${m.dep?fmtEUR(m.dep)+'/ud':'—'}</td>
+          <td><strong>${fmtEUR(m.tco36)}</strong></td>
+        </tr>
+      `).join('');
+
+      // Proyección 3 años
+      const y = pr.anios;
+      ulProy.innerHTML = `
+        <li>Año 1: <strong>${y[0].uds}</strong> uds · Ingresos: <strong>${fmtEUR(Math.round(y[0].ing))}</strong> · EBITDA: <strong>${fmtEUR(Math.round(y[0].ebitda))}</strong></li>
+        <li>Año 2: <strong>${y[1].uds}</strong> uds · Ingresos: <strong>${fmtEUR(Math.round(y[1].ing))}</strong> · EBITDA: <strong>${fmtEUR(Math.round(y[1].ebitda))}</strong></li>
+        <li>Año 3: <strong>${y[2].uds}</strong> uds · Ingresos: <strong>${fmtEUR(Math.round(y[2].ing))}</strong> · EBITDA: <strong>${fmtEUR(Math.round(y[2].ebitda))}</strong></li>
+      `;
+
+      // ===== Gráficos =====
+      // 1) Ubicaciones (estático ilustrativo)
+      try{
+        const ctxUbi = document.getElementById('chartUbicaciones').getContext('2d');
+        if(chartUbicaciones) chartUbicaciones.destroy();
+        chartUbicaciones = new Chart(ctxUbi,{
+          type:'bar',
+          data:{
+            labels:['Valladolid','Castilla y León','España'],
+            datasets:[
+              {label:'Escuelas', data:[70,1350,27000]},
+              {label:'Universidades', data:[2,10,90]},
+              {label:'Hospitales', data:[2,30,800]},
+              {label:'Gimnasios', data:[70,300,4561]},
+            ]
+          },
+          options:{responsive:true, scales:{x:{stacked:true}, y:{stacked:true,type:'logarithmic',min:1}}}
+        });
+      }catch(e){ console.warn('No se pudo renderizar chartUbicaciones',e); }
+
+      // 2) Revenue por máquina y flota
+      try{
+        const ctxRev = document.getElementById('chartRevenue').getContext('2d');
+        if(chartRevenue) chartRevenue.destroy();
+        const ventasUno = Object.entries(escenarios).map(([k,v])=> v.ventasDia*paramsFijos.diasMes*v.ticket);
+        const ventasFleet = ventasUno.map(v=> v*uds);
+        chartRevenue = new Chart(ctxRev,{
+          type:'bar',
+          data:{
+            labels:['Conservador','Intermedio','Optimista'],
+            datasets:[
+              {label:'Por máquina', data:ventasUno},
+              {label:`Flota (${uds} uds)`, data:ventasFleet}
+            ]
+          },
+          options:{responsive:true}
+        });
+      }catch(e){ console.warn('No se pudo renderizar chartRevenue',e); }
+
+      // 3) Caja 12 meses
+      try{
+        const ctxCash = document.getElementById('chartCash').getContext('2d');
+        if(chartCash) chartCash.destroy();
+        const meses = f12.caja.map(x=>'M'+x.mes);
+        const acum = f12.caja.map(x=>x.acumulada);
+        chartCash = new Chart(ctxCash,{
+          type:'line',
+          data:{ labels:meses, datasets:[{label:'Caja acumulada', data:acum}]},
+          options:{responsive:true}
+        });
+      }catch(e){ console.warn('No se pudo renderizar chartCash',e); }
+
+      // 4) Proyección 3 años
+      try{
+        const ctxProy = document.getElementById('chartProyeccion').getContext('2d');
+        if(chartProy) chartProy.destroy();
+        chartProy = new Chart(ctxProy,{
+          type:'line',
+          data:{
+            labels:['Año 1','Año 2','Año 3'],
+            datasets:[
+              {label:'Ingresos', data:pr.anios.map(a=>a.ing)},
+              {label:'EBITDA', data:pr.anios.map(a=>a.ebitda)}
+            ]
+          },
+          options:{responsive:true}
+        });
+      }catch(e){ console.warn('No se pudo renderizar chartProyeccion',e); }
+    }
+
+    // Eventos
+    [selEscenario, selModelo, numMaquinas, precioCompra, rentaMensual, cuotaLeasing].forEach(el=> el.addEventListener('change', render));
+
+    // Render inicial
+    window.addEventListener('DOMContentLoaded', render);
+  </script>
+
+  <noscript>
+    <div style="max-width:1100px;margin:1rem auto;background:#fff3cd;border:1px solid #ffeeba;border-radius:12px;padding:1rem">
+      Para ver los gráficos interactivos, activa JavaScript en tu navegador.
+    </div>
+  </noscript>
+</body>
+</html>
